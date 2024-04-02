@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.senac.calculadora.components.LabelComponent
 import com.senac.calculadora.components.MyTopBar
 import com.senac.calculadora.ui.theme.CalculadoraTheme
 
@@ -65,13 +66,7 @@ fun MyApp() {
                 verticalAlignment = Alignment.CenterVertically
             ){
 
-                Text(
-                    text = (stringResource(R.string.amount)),
-                    textAlign = TextAlign.Right,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-                )
+                LabelComponent(labelResource = R.string.amount)
 
                 TextField(
                     value = "",
@@ -84,13 +79,7 @@ fun MyApp() {
                 verticalAlignment = Alignment.CenterVertically
             ){
 
-                Text(
-                    text = ("Custom %"),
-                    textAlign = TextAlign.Right,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-                )
+                LabelComponent(labelResource = R.string.custom)
 
                 Slider(
                     value = 15f,
@@ -111,18 +100,37 @@ fun MyApp() {
                     text = "15%",
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(1.5f)
                 )
 
                 Text(
                     text = "18%",
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(1.5f)
                 )
             }
 
-            Row {
+            Row (
+                modifier = Modifier
+                    .padding(top = 8.dp)
+            ){
+
+                LabelComponent(labelResource = R.string.tips)
+
+                Text(
+                    text = "R$ 0,00",
+                    modifier = Modifier
+                        .weight(1.5f),
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = "R$ 0,00",
+                    modifier = Modifier
+                        .weight(1.5f),
+                    textAlign = TextAlign.Center
+                )
 
             }
         }
