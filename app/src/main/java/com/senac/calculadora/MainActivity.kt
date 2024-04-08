@@ -25,6 +25,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -33,9 +34,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.senac.calculadora.components.LabelComponent
 import com.senac.calculadora.components.MyTopBar
 import com.senac.calculadora.ui.theme.CalculadoraTheme
+import com.senac.calculadora.viewmodel.TipViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyApp() {
+fun MyApp(tipViewModel: TipViewModel = viewModel()) {
     Scaffold(
         topBar = {
             MyTopBar()
@@ -69,29 +72,7 @@ fun MyApp() {
                 .padding(16.dp)
         ) {
 
-            val amount = remember {
-                mutableStateOf(0.0)
-            }
-
-            val custom = remember {
-                mutableStateOf(15)
-            }
-
-            val tip15 = remember {
-                mutableStateOf(0.0)
-            }
-
-            val totalTip15 = remember {
-                mutableStateOf(0.0)
-            }
-
-            val tipCustom = remember {
-                mutableStateOf(0.0)
-            }
-
-            val totalTipCustom = remember {
-                mutableStateOf(0.0)
-            }
+            val tipState = tipViewModel.uiState.collectAsState()
 
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -100,8 +81,8 @@ fun MyApp() {
                 LabelComponent(labelResource = R.string.amount)
 
                 TextField(
-                    value = amount.value.toString(),
-                    onValueChange = {amount.value = it.toDouble()},
+                    value = tipState.value.amount.toString(),
+                    onValueChange = {tipViewModel.updateAmount(it.toFloat())},
                     modifier = Modifier.weight(3f)
                 )
 
@@ -113,8 +94,8 @@ fun MyApp() {
                 LabelComponent(labelResource = R.string.custom)
 
                 Slider(
-                    value = custom.value.toFloat(),
-                    onValueChange = {},
+                    value = tipState.value.custom.toFloat(),
+                    onValueChange = {tipViewModel.updateCustom(it.toInt())},
                     valueRange = 0f..30f,
                     modifier = Modifier
                         .weight(3f)
@@ -135,7 +116,7 @@ fun MyApp() {
                 )
 
                 Text(
-                    text = "${custom.value}",
+                    text = "${tipState.value.custom}%",
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .weight(1.5f)
@@ -150,7 +131,7 @@ fun MyApp() {
                 LabelComponent(labelResource = R.string.tips)
 
                 Text(
-                    text = "R$ ${tip15.value}",
+                    text = "R$ ${tipState.value.getTip15()}",
                     modifier = Modifier
                         .weight(1.5f)
                         .background(color = Color.LightGray),
@@ -158,7 +139,7 @@ fun MyApp() {
                 )
 
                 Text(
-                    text = "R$ ${tipCustom.value}",
+                    text = "R$ ${tipState.value.getTipCustom()}",
                     modifier = Modifier
                         .weight(1.5f)
                         .background(color = Color.LightGray),
@@ -175,7 +156,7 @@ fun MyApp() {
                 LabelComponent(labelResource = R.string.total)
 
                 Text(
-                    text = "R$ ${totalTip15.value}",
+                    text = "R$ ${tipState.value.getTotal15()}",
                     modifier = Modifier
                         .weight(1.5f)
                         .background(color = Color.LightGray),
@@ -183,7 +164,7 @@ fun MyApp() {
                 )
 
                 Text(
-                    text = "R$ ${totalTipCustom.value}",
+                    text = "R$ ${tipState.value.getTotalCustom()}",
                     modifier = Modifier
                         .weight(1.5f)
                         .background(color = Color.LightGray),
