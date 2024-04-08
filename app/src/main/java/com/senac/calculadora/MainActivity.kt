@@ -131,7 +131,7 @@ fun MyApp(tipViewModel: TipViewModel = viewModel()) {
                 LabelComponent(labelResource = R.string.tips)
 
                 Text(
-                    text = "R$ ${tipState.value.getTip15()}",
+                    text = "R$ %2f".format(tipState.value.getTip15()),
                     modifier = Modifier
                         .weight(1.5f)
                         .background(color = Color.LightGray),
@@ -139,7 +139,7 @@ fun MyApp(tipViewModel: TipViewModel = viewModel()) {
                 )
 
                 Text(
-                    text = "R$ ${tipState.value.getTipCustom()}",
+                    text = "R$ %2f".format(tipState.value.getTipCustom()),
                     modifier = Modifier
                         .weight(1.5f)
                         .background(color = Color.LightGray),
@@ -156,7 +156,7 @@ fun MyApp(tipViewModel: TipViewModel = viewModel()) {
                 LabelComponent(labelResource = R.string.total)
 
                 Text(
-                    text = "R$ ${tipState.value.getTotal15()}",
+                    text = "R$ %.2f".format(tipState.value.getTotal15()),
                     modifier = Modifier
                         .weight(1.5f)
                         .background(color = Color.LightGray),
@@ -164,7 +164,7 @@ fun MyApp(tipViewModel: TipViewModel = viewModel()) {
                 )
 
                 Text(
-                    text = "R$ ${tipState.value.getTotalCustom()}",
+                    text = "R$ %.2f".format(tipState.value.getTotalCustom()),
                     modifier = Modifier
                         .weight(1.5f)
                         .background(color = Color.LightGray),

@@ -10,8 +10,8 @@ data class Tip (
 
     fun getTipCustom() = amount * custom / 100
 
-    fun getTotal15() = amount + getTip15())
+    fun getTotal15() = amount + getTip15()
 
-    fun getTotalCustom() = amount + getTipCustom())
+    fun getTotalCustom() = amount + getTipCustom()
 
 }
